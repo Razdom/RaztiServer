@@ -38,6 +38,10 @@ function initConfig(err, data) {
 function getConfigValue(name) {
   return configData[name];
 }
+function setConfigValue(name,value){
+  configData[name] = value;
+  saveConfig();
+}
 
 function setConfigToDefult() {
   configData['host'] = '0.0.0.0';
@@ -77,3 +81,4 @@ function saveRespone(err) {
 
 module.exports = ConfigManager;
 module.exports.getConfigValue = getConfigValue;
+module.exports.setConfigValue = setConfigValue;
