@@ -1,10 +1,8 @@
-var id, name, maxPlayers, rooms = [],
-  players = [];
-
 function zone(id, name, maxPlayers) {
   this.id = id;
   this.name = name;
   this.maxPlayers = maxPlayers;
+  this.rooms = [];
 }
 
 function addRoom(room) {
@@ -18,5 +16,5 @@ function removeRoom(room) {
 }
 
 module.exports = zone;
-module.exports.addRoom = addRoom;
-module.exports.removeRoom = removeRoom;
+zone.prototype.addRoom = addRoom;
+zone.prototype.removeRoom = removeRoom;
