@@ -1,7 +1,8 @@
-function zone(id, name, maxPlayers) {
+function zone(id, name, maxPlayers, defultJoinRoom) {
   this.id = id;
   this.name = name;
   this.maxPlayers = maxPlayers;
+  this.defultJoinRoom = defultJoinRoom;
   this.rooms = [];
 }
 
@@ -15,6 +16,11 @@ function removeRoom(room) {
     rooms.splice(rooms.indexOf(rooms), -1);
 }
 
+function setDefultRoom(room) {
+  this.defultJoinRoom = room;
+}
+
 module.exports = zone;
 zone.prototype.addRoom = addRoom;
 zone.prototype.removeRoom = removeRoom;
+zone.prototype.setDefultRoom = setDefultRoom;
