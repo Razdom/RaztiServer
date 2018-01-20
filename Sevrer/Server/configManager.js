@@ -24,7 +24,7 @@ function loadConfigFile() {
 
 function initConfig(err, data) {
   if (err)
-    console.log('Can`t load the config file! err: '+err);
+    console.log('Can`t load the config file! err: ' + err);
   else {
     var lines = data.split("\r\n");
     for (var l in lines) {
@@ -38,7 +38,8 @@ function initConfig(err, data) {
 function getConfigValue(name) {
   return configData[name];
 }
-function setConfigValue(name,value){
+
+function setConfigValue(name, value) {
   configData[name] = value;
   saveConfig();
 }
