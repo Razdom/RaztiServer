@@ -11,10 +11,32 @@ function ConfigManager() {
 function loadConfig() {
   if (fs.existsSync(defultPath)) {
     console.log('The Config file Founded!');
+    loadConfigFile();
   } else {
     console.log('The Config file not Found!');
     createNewConfigFile();
   }
+}
+
+function loadConfigFile() {
+  fs.readFile(defultPath, 'utf8', initConfig);
+}
+
+function initConfig(err, data) {
+  if (err)
+    console.log('Can`t load the config file! err: '+err);
+  else {
+    var lines = data.split("\r\n");
+    for (var l in lines) {
+      var line = lines[l].split("=");
+      configData[line[0]] = line[1];
+    }
+    console.log('The configs are redy!');
+  }
+}
+
+function getConfigValue(name) {
+  return configData[name];
 }
 
 function setConfigToDefult() {
@@ -54,3 +76,4 @@ function saveRespone(err) {
 }
 
 module.exports = ConfigManager;
+module.exports.getConfigValue = getConfigValue;
