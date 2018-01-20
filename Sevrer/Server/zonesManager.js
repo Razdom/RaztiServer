@@ -25,9 +25,15 @@ function getZoneByName(name) {
   return null;
 }
 
+function removeZone(zone) {
+  if (zone != null && zones.indexOf(zone) > -1)
+    zones.splice(zones.indexOf(zone), 1);
+}
+
 
 
 module.exports = zonesMnager;
 module.exports.createNewZone = createNewZone;
 module.exports.getZoneByID = getZoneByID;
 module.exports.getZoneByName = getZoneByName;
+module.exports.removeZone = getZoneByName;
