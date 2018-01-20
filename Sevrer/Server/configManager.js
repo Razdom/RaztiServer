@@ -56,6 +56,9 @@ function setConfigToDefult() {
   configData['mysqlUsername'] = '';
   configData['mysqlPassword'] = '';
   configData['mysqlDatabase'] = '';
+  configData['administratorZone'] = 'adminsys';
+  configData['administratorUsername'] = 'admin';
+  configData['administratorPassword'] = 'raztiAdmin';
 }
 
 function createNewConfigFile() {
