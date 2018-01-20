@@ -1,0 +1,24 @@
+{
+  "name": "raztiserver",
+  "version": "0.0.1",
+  "description": "free server for your customized multiplayer game",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Razdom/RaztiServer.git"
+  },
+  "keywords": [
+    "multiplayer",
+    "game",
+    "chat"
+  ],
+  "author": "Razdom",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Razdom/RaztiServer/issues"
+  },
+  "homepage": "https://github.com/Razdom/RaztiServer#readme"
+}
