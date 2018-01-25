@@ -1,8 +1,9 @@
-function zone(id, name, maxPlayers, defultJoinRoom) {
+function zone(id, name, maxPlayers, defultJoinRoom, canJoin) {
   this.id = id;
   this.name = name;
   this.maxPlayers = maxPlayers;
   this.defultJoinRoom = defultJoinRoom;
+  this.canJoin = canJoin;
   this.rooms = [];
 }
 

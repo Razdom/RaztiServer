@@ -1,14 +1,14 @@
 var zones = [];
 var lastZoneID = 0;
 
-function zonesMnager() {
-
-}
-
-function createNewZone(name, maxPlayers, defultJoinRoom) {
-  var zone = new zoneObj(lastZoneID++, name, maxPlayers, defultJoinRoom);
+function createNewZone(name, maxPlayers, defultJoinRoom, canJoin) {
+  var zone = new zoneObj(lastZoneID++, name, maxPlayers, defultJoinRoom, canJoin);
   zones.push(zone);
   return zone;
+}
+
+function getZones() {
+  return zones;
 }
 
 function getZoneByID(id) {
@@ -32,7 +32,7 @@ function removeZone(zone) {
 
 
 
-module.exports = zonesMnager;
+module.exports.getZones = getZones;
 module.exports.createNewZone = createNewZone;
 module.exports.getZoneByID = getZoneByID;
 module.exports.getZoneByName = getZoneByName;

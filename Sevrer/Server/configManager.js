@@ -3,26 +3,23 @@ var fs = require('fs');
 var defultPath = "./config.txt";
 var configData = [];
 
-function ConfigManager() {
-  console.log('ConfigManager Enabled!');
-  loadConfig();
-}
-
-function loadConfig() {
+function loadConfig(onConfigLoaded) {
   if (fs.existsSync(defultPath)) {
     console.log('The Config file Founded!');
-    loadConfigFile();
+    loadConfigFile(onConfigLoaded);
   } else {
     console.log('The Config file not Found!');
-    createNewConfigFile();
+    createNewConfigFile(onConfigLoaded);
   }
 }
 
-function loadConfigFile() {
-  fs.readFile(defultPath, 'utf8', initConfig);
+function loadConfigFile(onConfigLoaded) {
+  fs.readFile(defultPath, 'utf8', function(err, data) {
+    initConfig(err, data, onConfigLoaded)
+  });
 }
 
-function initConfig(err, data) {
+function initConfig(err, data, onConfigLoaded) {
   if (err)
     console.log('Can`t load the config file! err: ' + err);
   else {
@@ -31,6 +28,7 @@ function initConfig(err, data) {
       var line = lines[l].split("=");
       configData[line[0]] = line[1];
     }
+    onConfigLoaded();
     console.log('The configs are redy!');
   }
 }
@@ -44,7 +42,7 @@ function setConfigValue(name, value) {
   saveConfig();
 }
 
-function setConfigToDefult() {
+function setConfigToDefult(onConfigLoaded) {
   configData['host'] = '0.0.0.0';
   configData['port'] = '443';
   configData['MaxPlayersOnServer'] = '100';
@@ -59,11 +57,12 @@ function setConfigToDefult() {
   configData['administratorZone'] = 'adminsys';
   configData['administratorUsername'] = 'admin';
   configData['administratorPassword'] = 'raztiAdmin';
+  onConfigLoaded();
 }
 
-function createNewConfigFile() {
+function createNewConfigFile(onConfigLoaded) {
   console.log('Creating new config file...');
-  setConfigToDefult();
+  setConfigToDefult(onConfigLoaded);
   saveConfig();
 }
 
@@ -83,6 +82,6 @@ function saveRespone(err) {
     console.log("The config file was saved!");
 }
 
-module.exports = ConfigManager;
+module.exports.loadConfig = loadConfig;
 module.exports.getConfigValue = getConfigValue;
 module.exports.setConfigValue = setConfigValue;
