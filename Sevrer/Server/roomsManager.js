@@ -4,6 +4,7 @@ var lastID = 0;
 function createNewRoom(name, maxPlayers, canJoin) {
   var room = new room(lastID++, name, maxPlayers, canJoin);
   rooms.push(room);
+  return room;
 }
 
 function getRooms() {
