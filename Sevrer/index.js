@@ -1,18 +1,23 @@
 var net = require('net');
-var objList = require('./Server/objList.js');
-var configManager = require('./Server/configManager.js');
-var zonesManager = require('./Server/zonesManager.js');
+var managerCreatorObj = require('./Server/managerCreator.js');
 
 function luanchServer() {
+  var managerCreator = new managerCreatorObj();
+  var objList = require('./Server/objList.js');
+  managerCreator.events.on('load', function() {
+    configManager.events.on('load', onConfigLoaded);
+  });
+  managerCreator.load();
+}
+
+function onConfigLoaded() {
   createAdministratorZone();
 }
 
 function createAdministratorZone() {
-  configManager.loadConfig(onConfigLoaded);
-}
-
-function onConfigLoaded(){
-  zonesManager.createNewZone(configManager.getConfigValue('administratorZone'), configManager.getConfigValue('MaxPlayersOnZone'), null, false);
+  var adminZone = zonesManager.createNewZone('adminsys', configManager.getConfigValue('MaxPlayersOnZone'), null, false);
+  var adminRoom = roomsManager.createNewRoom(adminZone, 'adminRoom', configManager.getConfigValue('MaxPlayersOnRoom'), true);
+  adminZone.setDefultJoinRoom(adminRoom);
 }
 
 luanchServer();

@@ -9,12 +9,12 @@ function room(id, name, zone, maxPlayers, canJoin) {
 
 function addPlayer(player) {
   if (player != null)
-    players.push(player);
+    this.players.push(player);
 }
 
 function removePlayer(player) {
-  if (player != null && players.indexOf(player) > -1)
-    players.splice(players.indexOf(player), -1);
+  if (player != null && this.players.indexOf(player) > -1)
+    this.players.splice(this.players.indexOf(player), -1);
 }
 
 module.exports = room;

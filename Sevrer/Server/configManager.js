@@ -2,34 +2,40 @@ var fs = require('fs');
 
 var defultPath = "./config.txt";
 var configData = [];
+var events = require('events');
+var emitter = new events.EventEmitter();
 
-function loadConfig(onConfigLoaded) {
+function configManager() {
+  loadConfig();
+}
+
+function loadConfig() {
   if (fs.existsSync(defultPath)) {
-    console.log('The Config file Founded!');
-    loadConfigFile(onConfigLoaded);
+    console.log('[configMamager] The Config file Founded!');
+    loadConfigFile();
   } else {
-    console.log('The Config file not Found!');
-    createNewConfigFile(onConfigLoaded);
+    console.log('[configMamager] The Config file not Found!');
+    createNewConfigFile();
   }
 }
 
-function loadConfigFile(onConfigLoaded) {
+function loadConfigFile() {
   fs.readFile(defultPath, 'utf8', function(err, data) {
-    initConfig(err, data, onConfigLoaded)
+    initConfig(err, data);
   });
 }
 
-function initConfig(err, data, onConfigLoaded) {
+function initConfig(err, data) {
   if (err)
-    console.log('Can`t load the config file! err: ' + err);
+    console.log('[configMamager] Can`t load the config file! err: ' + err);
   else {
     var lines = data.split("\r\n");
     for (var l in lines) {
       var line = lines[l].split("=");
       configData[line[0]] = line[1];
     }
-    onConfigLoaded();
-    console.log('The configs are redy!');
+    emitter.emit('load');
+    console.log('[configMamager] The configs are ready!');
   }
 }
 
@@ -42,7 +48,7 @@ function setConfigValue(name, value) {
   saveConfig();
 }
 
-function setConfigToDefult(onConfigLoaded) {
+function setConfigToDefult() {
   configData['host'] = '0.0.0.0';
   configData['port'] = '443';
   configData['MaxPlayersOnServer'] = '100';
@@ -54,20 +60,19 @@ function setConfigToDefult(onConfigLoaded) {
   configData['mysqlUsername'] = '';
   configData['mysqlPassword'] = '';
   configData['mysqlDatabase'] = '';
-  configData['administratorZone'] = 'adminsys';
   configData['administratorUsername'] = 'admin';
   configData['administratorPassword'] = 'raztiAdmin';
-  onConfigLoaded();
+  emitter.emit('load');
 }
 
 function createNewConfigFile(onConfigLoaded) {
-  console.log('Creating new config file...');
+  console.log('[configMamager] Creating new config file...');
   setConfigToDefult(onConfigLoaded);
   saveConfig();
 }
 
 function saveConfig() {
-  console.log('Saving config...');
+  console.log('[configMamager] Saving config...');
   var content = "";
   for (var i in configData) {
     content += i + "=" + configData[i] + "\r\n";
@@ -77,11 +82,11 @@ function saveConfig() {
 
 function saveRespone(err) {
   if (err)
-    console.log("Save File Error: " + err);
+    console.log("[configMamager] Save File Error: " + err);
   else
-    console.log("The config file was saved!");
+    console.log("[configMamager] The config file was saved!");
 }
 
-module.exports.loadConfig = loadConfig;
-module.exports.getConfigValue = getConfigValue;
-module.exports.setConfigValue = setConfigValue;
+module.exports = configManager;
+configManager.prototype.events = emitter;
+configManager.prototype.getConfigValue = getConfigValue;

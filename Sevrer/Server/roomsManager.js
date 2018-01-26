@@ -1,8 +1,13 @@
 var rooms = [];
 var lastID = 0;
 
-function createNewRoom(name, maxPlayers, canJoin) {
-  var room = new room(lastID++, name, maxPlayers, canJoin);
+function roomsManager(){
+
+}
+
+function createNewRoom(zone, name, maxPlayers, canJoin) {
+  var room = new roomObj(lastID++, name, zone, maxPlayers, canJoin);
+  zone.addRoom(room);
   rooms.push(room);
   return room;
 }
@@ -28,10 +33,12 @@ function getRoomByName(name) {
 function removeRoom(room) {
   if (room != null && rooms.indexOf(room) > -1)
     rooms.splice(rooms.indexOf(room), 1);
+  room.zone.removeRoom(room);
 }
 
-module.exports.getRooms = getRooms;
-module.exports.createNewRoom = createNewRoom;
-module.exports.getRoomByID = getRoomByID;
-module.exports.getRoomByName = getRoomByName;
-module.exports.removeRoom = removeRoom;
+module.exports = roomsManager;
+roomsManager.prototype.createNewRoom = createNewRoom;
+roomsManager.prototype.getRooms = getRooms;
+roomsManager.prototype.getRoomByID = getRoomByID;
+roomsManager.prototype.getRoomByName = getRoomByName;
+roomsManager.prototype.removeRoom = removeRoom;

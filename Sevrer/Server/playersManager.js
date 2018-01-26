@@ -1,8 +1,12 @@
 var players = [];
 var lastID = 0;
 
+function playersManager(){
+
+}
+
 function createNewPlayer(name, socket, isAdministrator) {
-  var player = new room(lastID++, name, socket, isAdministrator);
+  var player = new playerObj(lastID++, name, socket, isAdministrator);
   players.push(player);
   return player;
 }
@@ -37,8 +41,10 @@ function removePlayer(player) {
     players.splice(players.indexOf(player), 1);
 }
 
-module.exports.getRooms = getRooms;
-module.exports.createNewRoom = createNewRoom;
-module.exports.getRoomByID = getRoomByID;
-module.exports.getRoomByName = getRoomByName;
-module.exports.removeRoom = removeRoom;
+module.exports = playersManager;
+playersManager.prototype.createNewPlayer = createNewPlayer;
+playersManager.prototype.getPlayers = getPlayers;
+playersManager.prototype.getPlayerByID = getPlayerByID;
+playersManager.prototype.getPlayersByName = getPlayersByName;
+playersManager.prototype.getPlayersBySocket = getPlayersBySocket;
+playersManager.prototype.removePlayer = removePlayer;
