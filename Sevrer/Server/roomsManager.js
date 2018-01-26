@@ -9,6 +9,7 @@ function createNewRoom(zone, name, maxPlayers, canJoin) {
   var room = new roomObj(lastID++, name, zone, maxPlayers, canJoin);
   zone.addRoom(room);
   rooms.push(room);
+  console.log('[roomsManager] New Room '+room.name+' created on: '+room.zone.name,' (id: '+room.id+')');
   return room;
 }
 
