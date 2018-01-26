@@ -18,5 +18,5 @@ function removePlayer(player) {
 }
 
 module.exports = room;
-zone.prototype.addPlayer = addPlayer;
-zone.prototype.removePlayer = removePlay;
+room.prototype.addPlayer = addPlayer;
+room.prototype.removePlayer = removePlayer;
